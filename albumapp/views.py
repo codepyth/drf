@@ -13,10 +13,13 @@ from rest_framework.response import Response
 @api_view(['POST'])
 def addAlbum(request):
     if request.method == 'POST':
-        serializer = AlbumSerializer(data=request.data, many=isinstance(request.data,list))
+        serializer = AlbumSerializer(data=request.data)
+        files = request.FILES.getlist('file')
         if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            for file in files:
+                Album.objects.create(name=request.data['name'], file = file)
+                # serializer.save()
+            return Response("Created Successfully", status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
