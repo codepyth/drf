@@ -4,7 +4,9 @@ from django.db import models
 
 class Album(models.Model):
     name = models.CharField(max_length=30, null=False, blank=False)
-    file = models.ImageField(upload_to='album/images')
-
     def __str__(self):
         return self.name
+
+class AlbumImages(models.Model):
+    album = models.ForeignKey(Album, on_delete=models.CASCADE)
+    file = models.ImageField(upload_to='album/images')

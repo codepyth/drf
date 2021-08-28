@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from rest_framework.response import Response
-from .serializers import AlbumSerializer
+from .serializers import AlbumImageSerializer
 from .models import *
 from rest_framework.decorators import api_view
 from rest_framework import status
@@ -13,12 +13,18 @@ from rest_framework.response import Response
 @api_view(['POST'])
 def addAlbum(request):
     if request.method == 'POST':
-        serializer = AlbumSerializer(data=request.data)
+        serializer = AlbumImageSerializer(data=request.data)
         files = request.FILES.getlist('file')
+        # print(files)
+        # print('got files list.............?')
+        # print(request.data['album'])
+        # print(serializer.is_valid())
+        # print(serializer.error_messages)
         if serializer.is_valid():
-            for file in files:
-                Album.objects.create(name=request.data['name'], file = file)
-                # serializer.save()
+            for f in files:
+                file_instance = AlbumImages(file = f, album = request.data['album'])
+                file_instance.save()
+            serializer.save()
             return Response("Created Successfully", status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
