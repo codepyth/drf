@@ -15,14 +15,18 @@ def addAlbum(request):
     if request.method == 'POST':
         serializer = AlbumImageSerializer(data=request.data)
         files = request.FILES.getlist('file')
+        
         # print(files)
         # print('got files list.............?')
         # print(request.data['album'])
         # print(serializer.is_valid())
         # print(serializer.error_messages)
+
         if serializer.is_valid():
+            name = Album(name = request.data['album'])
+            name.save()
             for f in files:
-                file_instance = AlbumImages(file = f, album = request.data['album'])
+                file_instance = AlbumImages(file = f, album = name)
                 file_instance.save()
             serializer.save()
             return Response("Created Successfully", status=status.HTTP_201_CREATED)
