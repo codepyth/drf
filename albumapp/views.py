@@ -21,7 +21,7 @@ def addAlbum(request):
         # print(request.data['album'])
         # print(serializer.is_valid())
         # print(serializer.error_messages)
-
+        
         if serializer.is_valid():
             name = Album(name = request.data['album'])
             name.save()
