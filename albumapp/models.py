@@ -10,3 +10,6 @@ class Album(models.Model):
 class AlbumImages(models.Model):
     album = models.ForeignKey(Album, related_name='album', on_delete=models.CASCADE)
     media = models.ImageField(upload_to='album/images')
+
+    def __str__(self) -> str:
+        return f'Files of ' + self.album.name

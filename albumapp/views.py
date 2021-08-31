@@ -25,17 +25,17 @@ from rest_framework import generics
 def addAlbum(request):
     if request.method == 'POST':
         serializer = AlbumSerializer(data=request.data)
-        files = request.FILES.getlist('file')
+        files = request.FILES.getlist('album')
 
-        print('files list...........', files)
-        name = request.data['name']
-        print('name: .......', name)
+        # print('files list...........', files)
+        # name = request.data['name']
+        # print('name: .......', name)
         
         if serializer.is_valid():
             name = Album.objects.create(name = request.data['name'])
             for f in files:
-                file_instance = AlbumImages(file = f, album = name)
-                file_instance.save()
+                AlbumImages.objects.create(media = f, album = name)
+                # file_instance.save()
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
