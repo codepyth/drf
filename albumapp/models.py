@@ -9,4 +9,4 @@ class Album(models.Model):
 
 class AlbumImages(models.Model):
     album = models.ForeignKey(Album, related_name='album', on_delete=models.CASCADE)
-    file = models.ImageField(upload_to='album/images')
+    media = models.ImageField(upload_to='album/images')

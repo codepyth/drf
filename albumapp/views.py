@@ -26,7 +26,11 @@ def addAlbum(request):
     if request.method == 'POST':
         serializer = AlbumSerializer(data=request.data)
         files = request.FILES.getlist('file')
+
+        print('files list...........', files)
         name = request.data['name']
+        print('name: .......', name)
+        
         if serializer.is_valid():
             name = Album.objects.create(name = request.data['name'])
             for f in files:
