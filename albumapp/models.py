@@ -8,5 +8,5 @@ class Album(models.Model):
         return self.name
 
 class AlbumImages(models.Model):
-    album = models.ForeignKey(Album, on_delete=models.CASCADE)
+    album = models.ForeignKey(Album, related_name='album', on_delete=models.CASCADE)
     file = models.ImageField(upload_to='album/images')

@@ -2,10 +2,12 @@ from rest_framework import serializers
 from .models import *
 
 
-class AlbumImageSerializer(serializers.ModelSerializer):
+class AlbumSerializer(serializers.ModelSerializer):
+    album = serializers.StringRelatedField(many=True, read_only=True)
     class Meta:
-        model = AlbumImages
-        fields = ['album', 'file']
+        model = Album
+        fields = ['name', 'album']
+
 
 # class AlbumSerializer(serializers.ModelSerializer):
 #     file = AlbumImageSerializer(many=True)
