@@ -7,6 +7,7 @@ class Album(models.Model):
     def __str__(self):
         return self.name
 
+
 class AlbumImages(models.Model):
     album = models.ForeignKey(Album, related_name='album', on_delete=models.CASCADE)
     media = models.ImageField(upload_to='album/images')
