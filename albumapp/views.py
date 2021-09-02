@@ -21,7 +21,7 @@ def addAlbum(request):
 
             if serializer.is_valid():
                 for file in albums:
-                    album = AlbumImages.objects.create(media = file, album = name)
+                    AlbumImages.objects.create(media = file, album = name)
                 serializer.save()
                 return Response(serializer.data, status.HTTP_201_CREATED)
         return Response("Please upload the files", status.HTTP_400_BAD_REQUEST)
