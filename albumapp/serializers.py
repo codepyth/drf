@@ -24,3 +24,13 @@ class AlbumSerializer(serializers.ModelSerializer):
             file = AlbumImages.objects.create(media=image, album=album)
             file.save()
         return album
+    
+    # def update(self, instance, validated_data):
+    #     albumimages = validated_data.pop('album_images')
+    #     instance.name = validated_data.get('name', instance.name)
+    #     instance.save()
+    #     update_images = []
+    #     existing_id = [e.id for e in instance.albumimages]
+    #     for image in albumimages:
+    #         pass
+

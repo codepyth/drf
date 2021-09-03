@@ -1,11 +1,12 @@
 from django.views import generic
+from rest_framework import generics, serializers
 from rest_framework.response import Response
-from .serializers import AlbumSerializer
+from .serializers import AlbumImagesSerializer, AlbumSerializer
 from .models import *
 from rest_framework.decorators import api_view
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.views import APIView
+from rest_framework.generics import ListAPIView
 
 
 # Create your views here.
@@ -17,7 +18,7 @@ def AddAlbum(request):
         serializer.save()
         return Response(serializer.data, status.HTTP_201_CREATED)
     return Response(serializer.errors, status.HTTP_400_BAD_REQUEST)
-    
+
 
 @api_view(['GET'])
 def GetAllAlbum(request):
@@ -25,9 +26,9 @@ def GetAllAlbum(request):
     serializer = AlbumSerializer(obj, many=True)
     return Response(serializer.data, status.HTTP_200_OK)
 
+
 @api_view(['GET'])
 def GetAlbumById(request, id):
-    obj = Album.objects.get(id = id)
-    print(obj)
+    obj = Album.objects.get(id=id)
     serializer = AlbumSerializer(obj, many=True)
     return Response(serializer.data)

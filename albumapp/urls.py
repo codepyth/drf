@@ -5,5 +5,5 @@ from .views import AddAlbum, GetAlbumById, GetAllAlbum
 urlpatterns = [
     path('create/', AddAlbum),
     path('albums/', GetAllAlbum),
-    path('album/<int:id>/', GetAlbumById)
+    path('album/delete/<int:id>/', GetAlbumById),
 ]
