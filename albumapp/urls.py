@@ -1,9 +1,9 @@
-from re import I
 from django.urls import path
-from .views import AddAlbum, GetAlbumById, GetAllAlbum
+from .views import addAlbum, GetAlbumById, GetAllAlbum
 
 urlpatterns = [
-    path('create/', AddAlbum),
-    path('albums/', GetAllAlbum),
-    path('album/delete/<int:id>/', GetAlbumById),
+    path('create/', addAlbum),
+    path('allalbums/', GetAllAlbum),
+    # path('album/<int:id>/', GetAlbumById),
+    path('album/<str:slug>', GetAlbumById),
 ]
