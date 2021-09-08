@@ -6,7 +6,7 @@ from .models import *
 from rest_framework.decorators import api_view
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework import generics
+# from rest_framework import generics
 import json
 
 
@@ -30,7 +30,6 @@ def addAlbum(request):
         if albums:
             name = Album.objects.create(name=request.data['name'])
             if serializer.is_valid():
-
                 for file in albums:
                     AlbumImages.objects.create(media=file, album=name)
                 # serializer.save()
