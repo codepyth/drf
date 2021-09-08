@@ -3,6 +3,12 @@ from rest_framework.relations import StringRelatedField
 from .models import *
 
 
+class AlbumUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Album
+        fields = ['name']
+
+
 class AlbumImagesSerializer(serializers.ModelSerializer):
     class Meta:
         model = AlbumImages
@@ -16,7 +22,7 @@ class AlbumSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Album
-        fields = ['user', 'name', 'album_images']
+        fields = ['id', 'user', 'name', 'album_images']
 
     # def to_representation(self, instance):
     #     rep = super(AlbumSerializer, self).to_representation(instance)
@@ -33,11 +39,7 @@ class AlbumSerializer(serializers.ModelSerializer):
     #         file.save()
     #     return album
 
-    # def update(self, instance, validated_data):
-    #     albumimages = validated_data.pop('album_images')
-    #     instance.name = validated_data.get('name', instance.name)
-    #     instance.save()
-    #     update_images = []
-    #     existing_id = [e.id for e in instance.albumimages]
-    #     for image in albumimages:
-    #         pass
+    def update(self, instance, validated_data):
+        instance.name = validated_data.get('name', instance.name)
+        instance.save()
+        return instance

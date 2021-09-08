@@ -1,12 +1,12 @@
 from django.views import generic
 from rest_framework import generics, serializers
 from rest_framework.response import Response
-from .serializers import AlbumImagesSerializer, AlbumSerializer
+from .serializers import AlbumImagesSerializer, AlbumSerializer, AlbumUpdateSerializer
 from .models import *
 from rest_framework.decorators import api_view
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework import  generics
+from rest_framework import generics
 import json
 
 
@@ -39,6 +39,20 @@ def addAlbum(request):
     return Response("Not found", status.HTTP_400_BAD_REQUEST)
 
 
+@api_view(['POST', 'PUT'])
+def UpdateAlbumName(request, id):
+    if request.method == 'PUT':
+        obj = Album.objects.get(id=id)
+        print("hereeeeee....................")
+        serializer = AlbumUpdateSerializer(obj, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status.HTTP_201_CREATED)
+        print(serializer.errors)
+        return Response(serializer.errors)
+    return Response({"Message: ": "This method is not allowed"}, status.HTTP_400_BAD_REQUEST)
+
+
 @api_view(['GET'])
 def GetAllAlbum(request):
     if request.method == 'GET':
@@ -53,11 +67,10 @@ def GetAllAlbum(request):
 
 
 @api_view(['GET'])
-def GetAlbumById(request, slug):
+def GetAlbumByUserId(request, slug):
     obj = Album.objects.filter(user=slug)
     serializer = AlbumSerializer(obj, many=True)
     return Response(serializer.data)
-
 
 #
 # class GetAlbumById(generics.ListAPIView):
